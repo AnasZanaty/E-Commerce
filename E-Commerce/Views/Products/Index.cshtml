@@ -1,0 +1,68 @@
+﻿@model IEnumerable<product>
+@{
+    ViewData["Title"] = "";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                @if (Context.User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+                <a asp-action="Edit" asp-controller="Products" asp-route-id="@item.Id">
+                <i class="fas fa-regular fa-pencil"></i></a>
+                <a class=" btn btn-outline-danger " asp-action="delete" asp-route-id="@item.Id" onclick="return confirm('are you sure for deleting this product?')"><i class="fas fa-regular fa-trash mr-2"></i>delete</a>
+}
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <img src="@item.ImgUrl" alt="@item.Name" style="width:90%;height:300px;">
+                </a>
+                <h1>@item.Name</h1>
+                <p>@item.price.ToString("c")</p>
+                <p>@item.Description</p>
+                <p>@item.category.Name</p>
+                <p>@item.ProductBrand</p>
+                <a class="btn btn-success" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@item.Id">Add To Cart<i class=" fas fa-regular  fa-shopping-cart"> </i></a>
+            </div>
+        </div>
+    }
+</div>
+@if (Context.User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class="text-white" style="position:fixed;right:30px;bottom:100px;">
+        <a asp-action="create" asp-controller="Products" class="btn btn-outline-success">
+            <i class="fas fa-regular fa-plus-square mr-2"></i>
+            Create
+        </a>
+    </div>
+}
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .price {
+        color: grey;
+        font-size: 22px;
+    }
+
+    .card button {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+        .card button:hover {
+            opacity: 0.7;
+        }
+</style>

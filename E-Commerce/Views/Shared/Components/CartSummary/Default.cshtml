@@ -1,0 +1,13 @@
+﻿@model int  //count
+@if (Model>0){
+<li class ="nav-item">  
+    <a class="nav-link text-black-50" asp-controller="Orders"asp-action="Cart">
+<i class="fas fa-regular fa-shopping-cart "> </i>
+        @Model
+        <b>
+            @(ViewBag.Total.ToString("c"))
+        </b>
+    </a>
+
+</li>
+}

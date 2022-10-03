@@ -1,0 +1,61 @@
+﻿@model product
+@using E_Commerce.Data
+
+@{
+    ViewData["title"] = "Edit Product" ;
+    var category = new SelectList(ViewBag.category,"Id","Name");
+}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <p>
+            <h2 class="text-center">Edit of @Model.Name Product</h2>
+        </p>
+    </div>
+    <div class="col-md-6 offset-3">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="controle-lable"></label>
+                <input asp-for="Name" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="controle-lable"></label>
+                <textarea asp-for="Description" class="form-control" rows=3></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="controle-lable"></label>
+                <input asp-for="price" class="form-control" autocomplete="off" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgUrl" class="controle-lable"></label>
+                <input asp-for="ImgUrl" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ImgUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductBrand" class="controle-lable"></label>
+                <select asp-for="ProductBrand" class="form-control" asp-items="@Html.GetEnumSelectList<ProductBrand>()" autocomplete="off"> </select>
+                <span asp-validation-for="ProductBrand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Category Name</label>
+                <select asp-for="categoryId" class="form-control" asp-items="@category"> </select>
+                <span asp-validation-for="categoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-outline-info float-right" />
+                <a asp-action="Index" class="btn btn-outline-secondary"> Show All Products</a>
+            </div>
+        </form>
+    </div>
+</div>
+@*//to use validations without going to the server which helping in performance  *@
+
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
